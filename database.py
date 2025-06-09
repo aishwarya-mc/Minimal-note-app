@@ -23,7 +23,20 @@ def add_note(title,content):
 def get_all_notes():
     conn=sqlite3.connect('notes.db')
     cursor=conn.cursor()
-    cursor.execute("SELECT * FROM notes")
-    rows=cursor.fetchall()
+    cursor.execute('SELECT id,title,content FROM notes')
+    notes=cursor.fetchall()
     conn.close()
-    return rows
+    return notes
+
+def update_note(note_id, new_title, new_content):
+    conn = sqlite3.connect('notes.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        UPDATE notes
+        SET title = ?, content = ?
+        WHERE id = ?
+    ''', (new_title, new_content, note_id))
+
+    conn.commit()
+    conn.close()
