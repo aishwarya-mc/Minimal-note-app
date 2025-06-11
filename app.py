@@ -8,7 +8,7 @@ from database import (
 )
 from datetime import datetime
 
-# Initialize database
+# Initialize database with clean schema
 init_db()
 
 # Create main application window
@@ -352,12 +352,15 @@ def handle_view_notes():
         app.notes_viewer.lift()
         return
     
-    app.notes_viewer = ttk.Toplevel(title="Your Notes")
-    app.notes_viewer.geometry("800x600")
-    app.notes_viewer.resizable(False, False)
+    viewer = ttk.Toplevel(title="Your Notes")
+    viewer.geometry("800x600")
+    viewer.resizable(False, False)
+    
+    # Store viewer reference
+    app.notes_viewer = viewer
     
     # Main frame
-    viewer_frame = ttk.Frame(app.notes_viewer, padding=10)
+    viewer_frame = ttk.Frame(viewer, padding=10)
     viewer_frame.pack(fill=BOTH, expand=YES)
     
     # Search frame
@@ -415,9 +418,9 @@ def handle_view_notes():
     def on_close():
         if hasattr(app, 'notes_viewer'):
             del app.notes_viewer
-        app.notes_viewer.destroy()
+        viewer.destroy()
     
-    app.notes_viewer.protocol("WM_DELETE_WINDOW", on_close)
+    viewer.protocol("WM_DELETE_WINDOW", on_close)
 
 # ------------------ Main Buttons ------------------
 action_frame = ttk.Frame(main_frame)
