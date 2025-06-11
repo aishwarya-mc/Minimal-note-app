@@ -1,10 +1,15 @@
 import sqlite3
+import os
 from datetime import datetime
 
 def init_db():
     """Initialize the database with proper error handling"""
     conn = None
     try:
+        # Delete existing database if it exists to ensure clean schema
+        if os.path.exists('notes.db'):
+            os.remove('notes.db')
+            
         conn = sqlite3.connect('notes.db')
         cursor = conn.cursor()
         cursor.execute('''
