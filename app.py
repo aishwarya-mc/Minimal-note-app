@@ -8,7 +8,7 @@ from database import (
 )
 from datetime import datetime
 
-# Initialize database with clean schema
+
 init_db()
 
 # Create main application window
@@ -18,6 +18,7 @@ app = ttk.Window(
     size=(800, 700),
     resizable=(False, False)
 )
+
 
 # ------------------ Styling Constants ------------------
 PAD_X = 15
